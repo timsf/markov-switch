@@ -1,0 +1,2 @@
+class BudgetConstraintError(Exception):
+    pass
