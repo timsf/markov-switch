@@ -3,8 +3,14 @@
 Replication code for "Exact Bayesian Inference for Markov Swithing Diffusions", open access at https://arxiv.org/abs/2502.09126.
 
     .
-    ├── markov_switch    # Code root
-    └── paper            # Materials pertaining to the academic paper
+    ├── switch       # Code root, top-level inference algorithms
+    │  ├── ea1lib    # Poisson coin/EA1 algorithm
+    │  ├── ea3lib    # Poisson coin/EA3 algorithm
+    │  ├── misc      # Miscellaneous scripts
+    │  ├── mjplib    # Inference and simulation for Markov jump processes
+    │  ├── models    # Specific Markov switching diffusion specifications
+    │  └── sdelib    # Utilities for Brownian bridge simulation
+    └── paper        # Materials pertaining to the academic paper
 
 
 ## Installation Instructions for Ubuntu/OSX
@@ -39,8 +45,10 @@ To reproduce Figures 1, 3, 4, 5, 6, first run `f109_mcmc.ipynb`, `f109_mcem.ipyn
 
 To reproduce Figures 7 and 8, first run `simstud_base.ipynb`, `simstud_extend.ipynb`, `simstud_infill.ipynb` to generate algorithm output, then `simstud_plots.ipynb` to draw the plots.
 
+Simulations may run for multiple days, depending on hardware. Users may save incremental results and restart simulations by executing the final cell attached to the notebooks.
 
-## Reference
+
+## Paper Reference
 
     @article{stumpf2025exact,
         title={Exact Bayesian inference for Markov switching diffusions},
