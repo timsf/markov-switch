@@ -162,8 +162,8 @@ def update_params_section(
     if not np.all((mod.bounds_thi[0] < thi_prime) & (thi_prime < mod.bounds_thi[1])):
         return False, thi_nil[state], z
 
-    ops_nil = mod.bind_params_diff(thi_nil, thi_prime, *h)
-    ops_prime = mod.bind_params_diff(thi_prime, thi_nil, *h)
+    ops_nil = mod.bind_params_diff_ext(thi_nil, thi_prime, *h)
+    ops_prime = mod.bind_params_diff_ext(thi_prime, thi_nil, *h)
     lb_nil, _, coins_nil = zip(*construct_coins(z, ops_nil, ome))
     lb_prime, _, coins_prime = zip(*construct_coins(z, ops_prime, ome))
     weight_nil = eval_weight(thi_nil, h, mod) + (log_q_forw + mod.eval_log_prior(thi_nil)) / len(z) - np.array(lb_nil) * np.diff(h.t)
@@ -234,8 +234,8 @@ def update_hidden_section(
     log_q_forw = mod.eval_log_prop(thi, *h_prime, np.isin(h_prime.t, is_data))
     log_q_back = mod.eval_log_prop(thi, *h_nil, np.isin(h_nil.t, is_data))
     
-    ops_nil = mod.bind_params(thi, *h_nil)
-    ops_prime = mod.bind_params(thi, *h_prime)
+    ops_nil = mod.bind_params_ext(thi, *h_nil)
+    ops_prime = mod.bind_params_ext(thi, *h_prime)
     lb_nil, _, coins_nil = zip(*construct_coins(z_nil, ops_nil, ome))
     lb_prime, _, coins_prime = zip(*construct_coins(z_prime, ops_prime, ome))
     weight_nil = eval_weight(thi, h_nil, mod) + log_q_forw / len(ops_nil) - np.array(lb_nil) * np.diff(h_nil.t) 

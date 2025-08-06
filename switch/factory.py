@@ -383,7 +383,7 @@ class IntractableModel(TractableModel):
         self.eval_rt_phi = [sp.lambdify((thi,), rt_[0]) for rt_ in rt_phi_x]
         self.eval_ext_phi = [sp.lambdify((thi,), ext_) for ext_ in ext_phi_x]
 
-    def bind_params(
+    def bind_params_ext(
         self,
         thi: FloatArr,
         t: FloatArr,
@@ -397,7 +397,7 @@ class IntractableModel(TractableModel):
                  partial(self.eval_ncp_bounds_phi, thi[y0], dt, x0, x1))
                 for dt, y0, x0, x1 in zip(np.diff(t), yt, xt, xt[1:])]
 
-    def bind_params_diff(
+    def bind_params_diff_ext(
         self, 
         thi_num: FloatArr,
         thi_den: FloatArr,
@@ -540,7 +540,7 @@ class IntractableModel(TractableModel):
         
         inf_x = np.min(self.denormalize(thi, fin_t, init_x, fin_x, np.array([inf_t, sup_t]), np.repeat(inf_z, 2)))
         sup_x = np.max(self.denormalize(thi, fin_t, init_x, fin_x, np.array([inf_t, sup_t]), np.repeat(sup_z, 2)))
-        return self.eval_bounds_phi(thi, inf_x, sup_x)
+        return self.eval_bounds_phi(thi, float(inf_x), float(sup_x))
     
     def eval_ncp_dphi(
         self,

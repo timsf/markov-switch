@@ -43,7 +43,7 @@ def sample_forward(
         fin_x = 0
         for fin_x in mod.sample_conv_endpt(thi, fin_t / n_steps, init_y, init_x, ome):
             fin_v, = mod.eval_ieta(thi[init_y], np.array([fin_x]))
-            eval_phi, eval_bounds_phi = mod.bind_params(thi, np.array([0, fin_t / n_steps]), np.array([init_y, init_y]), np.array([init_v, fin_v]))[0]
+            eval_phi, eval_bounds_phi = mod.bind_params_ext(thi, np.array([0, fin_t / n_steps]), np.array([init_y, init_y]), np.array([init_v, fin_v]))[0]
             gmin_phi = mod.eval_global_min_phi(thi[init_y])
             try:
                 next(switch.ea3lib.skeleton.sample_skeleton(fin_t, 0, repeat(0), eval_phi, eval_bounds_phi, gmin_phi, ome, 1))
@@ -66,7 +66,7 @@ def sample_bridge(
 ) -> FloatArr:
     
     init_x, fin_x = mod.eval_eta(thi[init_y], np.array([init_v, fin_v]))    
-    eval_phi, eval_bounds_phi = mod.bind_params(thi, np.array([0, fin_t]), np.array([init_y, init_y]), np.array([init_v, fin_v]))[0]
+    eval_phi, eval_bounds_phi = mod.bind_params_ext(thi, np.array([0, fin_t]), np.array([init_y, init_y]), np.array([init_v, fin_v]))[0]
     gmin_phi = mod.eval_global_min_phi(thi[init_y])
     z = next(switch.ea3lib.skeleton.sample_skeleton(fin_t, 0, repeat(0), eval_phi, eval_bounds_phi, gmin_phi, ome))
     return mod.eval_ieta(thi[init_y], mod.denormalize(thi[init_y], fin_t, init_x, fin_x, t, switch.ea3lib.skeleton.interpolate_skel(z, t, ome)[1]))

@@ -237,5 +237,5 @@ def est_loglik(
     include = h.yt == state
     st_disc, new_z = zip(*[switch.ea3lib.skeleton.est_poisson_log(z_, ops_[0], psi_[0], ome) 
                            if i else (0, z_) 
-                           for i, z_, psi_, ops_ in zip(include, z, psi, mod.bind_params(thi, *h))])
+                           for i, z_, psi_, ops_ in zip(include, z, psi, mod.bind_params_ext(thi, *h))])
     return sum(mod.eval_biased_log_lik(thi, *h)) + sum(st_disc) + mod.eval_log_prior(thi), new_z
